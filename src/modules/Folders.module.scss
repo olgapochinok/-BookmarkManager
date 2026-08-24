@@ -1,0 +1,36 @@
+@use '../styles/variables';
+.folders{
+    color: variables.$sidebar-text-color;
+    font-size: 20px;
+    &-title{
+        font-size: 25px;
+        font-weight: bolder;
+        text-align: center;
+    }
+    &-item{
+        position: relative;
+        margin-bottom: 10px;
+        margin-top: 10px;
+        &__btn{
+            color: variables.$sidebar-text-color;
+            font-weight: bold;
+            position: absolute;
+            background: transparent;
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+        }
+        &__title{
+            margin-left: 20px;
+            margin-bottom: 5px;
+            padding: 5px;
+        }
+        &__bage{
+            font-size: 16px;
+            color: variables.$sidebar-background-color;;
+            background-color: #a7bed4;
+            padding: 3px 5px;
+            border-radius: 8px;
+        }
+    }
+}

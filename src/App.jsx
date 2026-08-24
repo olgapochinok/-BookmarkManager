@@ -1,17 +1,20 @@
-import Sidebar from "./modules/Sidebar"
-
+import Sidebar from "./modules/Sidebar";
+import { BookmarksProvider } from "./BookmarksContext";
+import SidebarFolders from "./modules/SidebarFolders";
 function App() {
 
   return (
     <>
+      <BookmarksProvider>
       <Sidebar>
-                <h1>Sidebar</h1>
+        <SidebarFolders></SidebarFolders>
       </Sidebar>
       <div className="main">
         <div className="header"></div>
         <div className="content"></div>
         <div className="footer"></div>
       </div>
+      </BookmarksProvider>
     </>
   )
 }
