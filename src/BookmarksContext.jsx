@@ -9,7 +9,7 @@ export function BookmarksProvider({ children }) {
   const loadBookmarks = () => {
     if (typeof chrome !== "undefined" && chrome.bookmarks) {
       chrome.bookmarks.getTree((tree) => {
-        setTreeBookmarks(tree);
+        setTreeBookmarks(tree[0]?.children || []);
         setLoading(false);
       });
     } else {
