@@ -3,10 +3,12 @@ import { useBookmarks } from "../BookmarksContext.jsx";
 import styles from "./Folders.module.scss";
 
 function Folder({ node, level = 0 }) {
+  const { activeFolderId, setActiveFolderId } = useBookmarks();
   const [isOpen, setIsOpen] = useState(false);
   if (node.url) return null;
 
-  console.log(level);
+  let hasActive = false;
+  if (node.id === activeFolderId) hasActive = true;
 
   const hasSubFolders = node.children.some((child) => !child.url);
   if (hasSubFolders) {
@@ -22,7 +24,13 @@ function Folder({ node, level = 0 }) {
           >
             -
           </button>
-          <span className={styles["folders-item__title"]}>{node.title}</span>
+          <span
+            className={styles["folders-item__title"]}
+            style={{ backgroundColor: hasActive ? "#ffffff1c" : "transparent" }}
+            onClick={() => setActiveFolderId(node.id)}
+          >
+            {node.title}
+          </span>
           <span className={styles["folders-item__bage"]}>
             {node.children.filter((child) => child.url).length}
           </span>
@@ -43,7 +51,13 @@ function Folder({ node, level = 0 }) {
           >
             +
           </button>
-          <span className={styles["folders-item__title"]}>{node.title}</span>
+          <span
+            className={styles["folders-item__title"]}
+            style={{ backgroundColor: hasActive ? "#ffffff1c" : "transparent" }}
+            onClick={() => setActiveFolderId(node.id)}
+          >
+            {node.title}
+          </span>
           <span className={styles["folders-item__bage"]}>
             {node.children.filter((child) => child.url).length}
           </span>
@@ -56,7 +70,13 @@ function Folder({ node, level = 0 }) {
       style={{ marginLeft: `${25 + level * 15}px` }}
       className={styles["folders-item"]}
     >
-      <span className={styles["folders-item__title"]}>{node.title}</span>
+      <span
+        className={styles["folders-item__title"]}
+        style={{ backgroundColor: hasActive ? "#ffffff1c" : "transparent" }}
+        onClick={() => setActiveFolderId(node.id)}
+      >
+        {node.title}
+      </span>
       <span className={styles["folders-item__bage"]}>
         {node.children.filter((child) => child.url).length}
       </span>

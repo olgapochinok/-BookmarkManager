@@ -1,17 +1,18 @@
 import Sidebar from "./modules/Sidebar";
 import { BookmarksProvider } from "./BookmarksContext";
 import SidebarFolders from "./modules/SidebarFolders";
+import MainContent from "./modules/MainContent";
 function App() {
 
   return (
     <>
       <BookmarksProvider>
       <Sidebar>
-        <SidebarFolders></SidebarFolders>
+        <SidebarFolders/>
       </Sidebar>
       <div className="main">
         <div className="header"></div>
-        <div className="content"></div>
+        <MainContent/>
         <div className="footer"></div>
       </div>
       </BookmarksProvider>
