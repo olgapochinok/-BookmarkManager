@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Менеджер закладок",
+  "version": "1.0",
+  "description": "Удобное управление закладками в новой вкладке",
+  "permissions": [
+    "tabs",
+    "bookmarks"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {}
+}
