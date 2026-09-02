@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 
 const MIN_WIDTH = 200;
 const MAX_WIDTH = 500;
-const DEFAULT_WIDTH = 250;
+const DEFAULT_WIDTH = 300;
 
 function Sidebar( {children} ) {
   const [width, setWidth] = useState(DEFAULT_WIDTH);

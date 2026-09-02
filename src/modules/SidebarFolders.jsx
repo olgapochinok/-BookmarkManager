@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useBookmarks } from "../BookmarksContext.jsx";
-import styles from "./Folders.module.scss";
+import styles from "./SidebarFolders.module.scss";
 
 function Folder({ node, level = 0 }) {
   const { activeFolderId, setActiveFolderId } = useBookmarks();
