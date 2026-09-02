@@ -4,7 +4,7 @@ import styles from "./Folders.module.scss";
 
 function Folder({ node, level = 0 }) {
   const { activeFolderId, setActiveFolderId } = useBookmarks();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   if (node.url) return null;
 
   let hasActive = false;

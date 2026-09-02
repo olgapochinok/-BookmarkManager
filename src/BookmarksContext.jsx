@@ -1,10 +1,11 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import { useChromeStorage } from "./useChromeStorage";
 
 const BookmarksContext = createContext(null);
 export function BookmarksProvider({ children }) {
   const [treeBookmarks, setTreeBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeFolderId, setActiveFolderId] = useState("1");
+  const [activeFolderId, setActiveFolderId, folderLoading] = useChromeStorage('folderIdActive', "1");
 
   const loadBookmarks = () => {
     if (typeof chrome !== "undefined" && chrome.bookmarks) {
@@ -65,7 +66,22 @@ export function BookmarksProvider({ children }) {
   };
   useEffect(() => {
     loadBookmarks();
-    return () => {};
+        // Слушатели изменений в браузере
+    if (typeof chrome !== 'undefined' && chrome.bookmarks) {
+      chrome.bookmarks.onCreated.addListener(loadBookmarks);
+      chrome.bookmarks.onRemoved.addListener(loadBookmarks);
+      chrome.bookmarks.onChanged.addListener(loadBookmarks);
+      chrome.bookmarks.onMoved.addListener(loadBookmarks); // Важно для страниц: отслеживает перетаскивания
+    }
+
+    return () => {
+      if (typeof chrome !== 'undefined' && chrome.bookmarks) {
+        chrome.bookmarks.onCreated.removeListener(loadBookmarks);
+        chrome.bookmarks.onRemoved.removeListener(loadBookmarks);
+        chrome.bookmarks.onChanged.removeListener(loadBookmarks);
+        chrome.bookmarks.onMoved.removeListener(loadBookmarks);
+      }
+    };
   }, []);
 
   const findBookmarksInFolder = (nodes, folderId) => {

@@ -5,7 +5,9 @@
   "description": "Удобное управление закладками в новой вкладке",
   "permissions": [
     "tabs",
-    "bookmarks"
+    "bookmarks",
+    "storage"
+
   ],
   "background": {
     "service_worker": "background.js"
