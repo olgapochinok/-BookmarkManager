@@ -1,0 +1,28 @@
+@use '../styles/variables';
+.bookmark-col{
+    padding: 5px 0;
+    background-color: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    &--select{
+        background-color: variables.$bookmark-select;
+    }
+    &:hover{
+        background-color: variables.$bookmark-select;
+    }
+    &__btn{
+        border: solid 1px transparent;
+        cursor: pointer;
+        &:hover{
+            border: solid 1px #8d8d8d;
+        }
+    }
+    &__link{
+        text-decoration: none;
+        color: variables.$bookmark-text-color;
+        padding: 0 5px;
+        font-size: 16px;
+    }
+
+}

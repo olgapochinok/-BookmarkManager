@@ -1,6 +1,10 @@
 @use 'variables';
 @use 'mixins';
 
+body{
+    overflow: hidden;
+    margin: 0;
+}
 .page{
   position: relative;
   height: 100vh;
