@@ -6,7 +6,7 @@ function BookmarkCol({ bookmark, favicon }) {
   const [isSelect, setIsSelect] = useState(false);
 
   function clickBookmark(event) {
-    event.preventDefault();
+    if(event) event.preventDefault();
     setIsSelect((hasSelect) => !hasSelect);
   }
 

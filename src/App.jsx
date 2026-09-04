@@ -2,6 +2,7 @@ import Sidebar from "./modules/Sidebar";
 import { BookmarksProvider } from "./BookmarksContext";
 import SidebarFolders from "./modules/SidebarFolders";
 import MainContent from "./modules/MainContent";
+import Toolbar from "./modules/Toolbar";
 function App() {
 
   return (
@@ -11,7 +12,7 @@ function App() {
         <SidebarFolders/>
       </Sidebar>
       <div className="main">
-        <div className="header"></div>
+        <Toolbar/>
         <MainContent/>
         <div className="footer"></div>
       </div>

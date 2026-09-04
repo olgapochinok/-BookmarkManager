@@ -1,11 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { useChromeStorage } from "./useChromeStorage";
+import { useChromeStorage } from "./hooks/useChromeStorage";
 
 const BookmarksContext = createContext(null);
 export function BookmarksProvider({ children }) {
   const [treeBookmarks, setTreeBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeFolderId, setActiveFolderId, folderLoading] = useChromeStorage('folderIdActive', "1");
+  const [activeFolderId, setActiveFolderId] = useChromeStorage('folderIdActive', "1");
+  const [sortBy, setSortBy] = useChromeStorage("sortBy",'default');
 
   const loadBookmarks = () => {
     if (typeof chrome !== "undefined" && chrome.bookmarks) {
@@ -102,14 +103,26 @@ export function BookmarksProvider({ children }) {
       : [];
   };
   const currentBookmarks = findBookmarksInFolder(treeBookmarks, activeFolderId);
+  const getSortedItems = () =>{
+    const itemCopy = [...currentBookmarks];
+    if (sortBy === 'title'){
+      return itemCopy.sort((a,b) => a.title.localeCompare(b.title));
+    }
+    if (sortBy === 'url'){
+      return itemCopy.sort((a,b) => a.url.localeCompare(b.url));
+    }
+    return itemCopy;
+  }
   return (
     <BookmarksContext.Provider
       value={{
         treeBookmarks,
         loading,
-        currentBookmarks,
+        currentBookmarks: getSortedItems(),
         activeFolderId,
         setActiveFolderId,
+        sortBy,
+        setSortBy,
       }}
     >
       {children}
