@@ -26,3 +26,23 @@
     }
 
 }
+.bookmark-list{
+    margin-top: 5px;
+    padding: 5px;
+    background: #ffffff9d;
+    font-size: 16px;
+    &:hover{
+        background-color: variables.$bookmark-select;
+    }
+    &__link{
+        text-decoration: none;
+        color: variables.$bookmark-text-color;
+        padding-left: 10px;       
+    }
+    &__url{
+        padding-left: 40px;
+        margin-top: 5px;
+        color: #8c8c8c;
+        font-size: 14px;
+    }
+}

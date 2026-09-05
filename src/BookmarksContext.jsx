@@ -5,8 +5,10 @@ const BookmarksContext = createContext(null);
 export function BookmarksProvider({ children }) {
   const [treeBookmarks, setTreeBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeFolderId, setActiveFolderId] = useChromeStorage('folderIdActive', "1");
-  const [sortBy, setSortBy] = useChromeStorage("sortBy",'default');
+  const [activeFolderId, setActiveFolderId] = useChromeStorage('folderIdActive', '1');
+  const [sortBy, setSortBy] = useChromeStorage('sortBy','default');
+  const [bookmarkView, setBookmarkView] = useChromeStorage('view', 'List' );
+  const [columnViewCount, setcolumnViewCount] = useChromeStorage('columnViewCount', '1');
 
   const loadBookmarks = () => {
     if (typeof chrome !== "undefined" && chrome.bookmarks) {
@@ -123,6 +125,10 @@ export function BookmarksProvider({ children }) {
         setActiveFolderId,
         sortBy,
         setSortBy,
+        bookmarkView,
+        setBookmarkView,
+        columnViewCount,
+        setcolumnViewCount,
       }}
     >
       {children}
