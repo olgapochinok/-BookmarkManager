@@ -15,7 +15,7 @@ function Folder({ node, level = 0 }) {
     if (isOpen) {
       return (
         <div
-          style={{ marginLeft: `${15 + level * 15}px` }}
+          style={{ marginLeft: `${5 + level * 15}px` }}
           className={styles["folders-item"]}
         >
           <button
@@ -42,7 +42,7 @@ function Folder({ node, level = 0 }) {
     } else {
       return (
         <div
-          style={{ marginLeft: `${15 + level * 15}px` }}
+          style={{ marginLeft: `${5 + level * 15}px` }}
           className={styles["folders-item"]}
         >
           <button
@@ -67,7 +67,7 @@ function Folder({ node, level = 0 }) {
   }
   return (
     <div
-      style={{ marginLeft: `${15 + level * 15}px` }}
+      style={{ marginLeft: `${5 + level * 15}px` }}
       className={styles["folders-item"]}
     >
       <span
