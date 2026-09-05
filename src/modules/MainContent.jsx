@@ -1,16 +1,24 @@
+import { useState } from "react";
 import { useBookmarks } from "../BookmarksContext";
 import { useBookmarkSelected } from "../hooks/useBookmarkSelected";
+import Modal from "react-modal";
 import styles from "./MainContent.module.scss";
 
-function BookmarkList({ bookmark, favicon }) {
+function BookmarkList({ bookmark, favicon, modalOpen }) {
   const [isSelect, clickBookmark] = useBookmarkSelected();
+
   return (
     <div
       className={`
       ${styles["bookmark-list"]}
       ${isSelect ? styles["bookmark-col--select"] : "#fff"}`}
     >
-      <button className={styles["bookmark-col__btn"]}>
+      <button
+        onClick={() =>
+          modalOpen(bookmark.id, bookmark.title, bookmark.url, favicon)
+        }
+        className={styles["bookmark-col__btn"]}
+      >
         <img src={favicon} />
       </button>
       <a
@@ -24,7 +32,7 @@ function BookmarkList({ bookmark, favicon }) {
     </div>
   );
 }
-function BookmarkCol({ bookmark, favicon }) {
+function BookmarkCol({ bookmark, favicon, modalOpen }) {
   const [isSelect, clickBookmark] = useBookmarkSelected();
 
   return (
@@ -33,7 +41,12 @@ function BookmarkCol({ bookmark, favicon }) {
       ${styles["bookmark-col"]}
       ${isSelect ? styles["bookmark-col--select"] : ""}`}
     >
-      <button className={styles["bookmark-col__btn"]}>
+      <button
+        onClick={() =>
+          modalOpen(bookmark.id, bookmark.title, bookmark.url, favicon)
+        }
+        className={styles["bookmark-col__btn"]}
+      >
         <img src={favicon} />
       </button>
       <a
@@ -49,6 +62,12 @@ function BookmarkCol({ bookmark, favicon }) {
 
 export default function MainContent() {
   const { currentBookmarks, bookmarkView, columnViewCount } = useBookmarks();
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const [editId, setEditId] = useState(null);
+  const [editFavicon, setEditFavicon] = useState("");
+  const [editTitle, setEditTitle] = useState("");
+  const [editUrl, setEditUrl] = useState("");
 
   function getFaviconUrl(pageUrl) {
     const url = new URL(chrome.runtime.getURL("/_favicon/"));
@@ -56,6 +75,48 @@ export default function MainContent() {
     url.searchParams.set("size", "16"); // Размер иконки (16, 32, 64)
     return url.toString();
   }
+
+  const openModal = (id, title, url, favicon) => {
+    setEditId(id);
+    setEditTitle(title);
+    setEditUrl(url);
+    setEditFavicon(favicon);
+    setModalIsOpen(true);
+  };
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+  const deleteBookmark = () => {
+    console.log("Удалить закладку № "+ editId);
+    setModalIsOpen(false);
+  }
+  const modalContent = (
+    <div>
+      <h2>Редактирование закладки</h2>
+      <p>
+        <img src={editFavicon} />
+         № { editId }
+      </p>
+      <p>{editTitle}</p>
+      <p>{editUrl}</p>
+      <button onClick={deleteBookmark}>Удалить закладку</button>
+      <button onClick={closeModal}>Закрыть</button>
+    </div>
+  );
+  const customStyles = {
+    content: {
+      backgroundColor: "#eee",
+      width: "500px", // фиксированная ширина
+      height: "300px", // фиксированная высота
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)", // центрирование
+    },
+  };
+
   if (bookmarkView === "Column") {
     return (
       <div className="content" style={{ columnCount: columnViewCount }}>
@@ -64,8 +125,16 @@ export default function MainContent() {
             key={item.id}
             bookmark={item}
             favicon={getFaviconUrl(item.url)}
+            modalOpen={openModal}
           ></BookmarkCol>
         ))}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customStyles}
+        >
+          {modalContent}
+        </Modal>
       </div>
     );
   }
@@ -76,8 +145,16 @@ export default function MainContent() {
           key={item.id}
           bookmark={item}
           favicon={getFaviconUrl(item.url)}
+          modalOpen={openModal}
         ></BookmarkList>
       ))}
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        style={customStyles}
+      >
+        {modalContent}
+      </Modal>
     </div>
   );
 }
