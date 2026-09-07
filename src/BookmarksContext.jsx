@@ -38,13 +38,18 @@ export function BookmarksProvider({ children }) {
       }
     };
   }, []);
-  
+
   const deleteBookmark = (id) => {
     if (typeof chrome !== 'undefined' && chrome.bookmarks) {
       chrome.bookmarks.removeTree(id, () => {})
     }
+  };
 
-  }
+  const saveChangeBookmark = (id, title, url ) => {
+        if (typeof chrome !== 'undefined' && chrome.bookmarks) {
+      chrome.bookmarks.update(id,{title: title, url: url}, () => {})
+    }
+  };
 
   const findBookmarksInFolder = (nodes, folderId) => {
     let activeFolderNode = null;
@@ -89,6 +94,7 @@ export function BookmarksProvider({ children }) {
         columnViewCount,
         setcolumnViewCount,
         deleteBookmark,
+        saveChangeBookmark,
       }}
     >
       {children}

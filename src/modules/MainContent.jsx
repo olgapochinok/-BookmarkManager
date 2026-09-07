@@ -61,7 +61,7 @@ function BookmarkCol({ bookmark, favicon, modalOpen }) {
 }
 
 export default function MainContent() {
-  const { currentBookmarks, bookmarkView, columnViewCount, deleteBookmark } = useBookmarks();
+  const { currentBookmarks, bookmarkView, columnViewCount, deleteBookmark, saveChangeBookmark } = useBookmarks();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [editId, setEditId] = useState(null);
@@ -88,11 +88,10 @@ export default function MainContent() {
   };
   const bookmarkDelete = () => {
     deleteBookmark(editId);
-    console.log("Удалить закладку № "+ editId);
     setModalIsOpen(false);
   }
   const bookmarkSaveChange = () => {
-    console.log("Сохранить измения закладки № "+ editId);
+    saveChangeBookmark(editId, editTitle, editUrl);
     setModalIsOpen(false);
   }
   const modalContent = (
@@ -102,8 +101,20 @@ export default function MainContent() {
         <img src={editFavicon} />
          № { editId }
       </p>
-      <p>{editTitle}</p>
-      <p>{editUrl}</p>
+      <p>
+        <input
+          type="text"
+          value={editTitle}
+          onChange={(e) => setEditTitle(e.target.value)}
+      />
+      </p>
+      <p>
+       <input
+          type="texeditUrlt"
+          value={editUrl}
+          onChange={(e) => setEditUrl(e.target.value)}
+      />
+      </p>
       <button onClick={bookmarkDelete}>Удалить закладку</button>
       <button onClick={bookmarkSaveChange}>Сохранить изменения</button>
       <button onClick={closeModal}>Закрыть</button>
