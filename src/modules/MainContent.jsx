@@ -61,7 +61,7 @@ function BookmarkCol({ bookmark, favicon, modalOpen }) {
 }
 
 export default function MainContent() {
-  const { currentBookmarks, bookmarkView, columnViewCount } = useBookmarks();
+  const { currentBookmarks, bookmarkView, columnViewCount, deleteBookmark } = useBookmarks();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [editId, setEditId] = useState(null);
@@ -86,8 +86,13 @@ export default function MainContent() {
   const closeModal = () => {
     setModalIsOpen(false);
   };
-  const deleteBookmark = () => {
+  const bookmarkDelete = () => {
+    deleteBookmark(editId);
     console.log("Удалить закладку № "+ editId);
+    setModalIsOpen(false);
+  }
+  const bookmarkSaveChange = () => {
+    console.log("Сохранить измения закладки № "+ editId);
     setModalIsOpen(false);
   }
   const modalContent = (
@@ -99,11 +104,12 @@ export default function MainContent() {
       </p>
       <p>{editTitle}</p>
       <p>{editUrl}</p>
-      <button onClick={deleteBookmark}>Удалить закладку</button>
+      <button onClick={bookmarkDelete}>Удалить закладку</button>
+      <button onClick={bookmarkSaveChange}>Сохранить изменения</button>
       <button onClick={closeModal}>Закрыть</button>
     </div>
   );
-  const customStyles = {
+  const stylesModal = {
     content: {
       backgroundColor: "#eee",
       width: "500px", // фиксированная ширина
@@ -131,7 +137,7 @@ export default function MainContent() {
         <Modal
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
-          style={customStyles}
+          style={stylesModal}
         >
           {modalContent}
         </Modal>
@@ -151,7 +157,7 @@ export default function MainContent() {
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
-        style={customStyles}
+        style={stylesModal}
       >
         {modalContent}
       </Modal>
