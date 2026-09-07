@@ -61,7 +61,13 @@ function BookmarkCol({ bookmark, favicon, modalOpen }) {
 }
 
 export default function MainContent() {
-  const { currentBookmarks, bookmarkView, columnViewCount, deleteBookmark, saveChangeBookmark } = useBookmarks();
+  const {
+    currentBookmarks,
+    bookmarkView,
+    columnViewCount,
+    deleteBookmark,
+    saveChangeBookmark,
+  } = useBookmarks();
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [editId, setEditId] = useState(null);
@@ -89,35 +95,44 @@ export default function MainContent() {
   const bookmarkDelete = () => {
     deleteBookmark(editId);
     setModalIsOpen(false);
-  }
+  };
   const bookmarkSaveChange = () => {
     saveChangeBookmark(editId, editTitle, editUrl);
     setModalIsOpen(false);
-  }
+  };
   const modalContent = (
-    <div>
+    <div className={styles["modal"]}>
       <h2>Редактирование закладки</h2>
       <p>
-        <img src={editFavicon} />
-         № { editId }
+        <img src={editFavicon} /><span> № </span> {editId}
       </p>
       <p>
         <input
+          className={styles["modal__input"]}
           type="text"
           value={editTitle}
           onChange={(e) => setEditTitle(e.target.value)}
-      />
+        />
       </p>
       <p>
-       <input
+        <input
+          className={styles["modal__input"]}
           type="texeditUrlt"
           value={editUrl}
           onChange={(e) => setEditUrl(e.target.value)}
-      />
+        />
       </p>
-      <button onClick={bookmarkDelete}>Удалить закладку</button>
-      <button onClick={bookmarkSaveChange}>Сохранить изменения</button>
-      <button onClick={closeModal}>Закрыть</button>
+      <p className={styles["modal__btn-wrap"]}>
+        <button className={styles["modal__btn"]} onClick={bookmarkDelete}>
+          Удалить закладку
+        </button>
+        <button className={styles["modal__btn"]} onClick={bookmarkSaveChange}>
+          Сохранить изменения
+        </button>
+        <button className={styles["modal__btn"]} onClick={closeModal}>
+          Закрыть
+        </button>
+      </p>
     </div>
   );
   const stylesModal = {
