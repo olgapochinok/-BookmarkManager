@@ -102,7 +102,7 @@ export default function MainContent() {
   };
   const modalContent = (
     <div className={styles["modal"]}>
-      <h2>Редактирование закладки</h2>
+      <h2 className={styles["modal__title"]}>Редактирование закладки</h2>
       <p>
         <img src={editFavicon} /><span> № </span> {editId}
       </p>
@@ -137,6 +137,7 @@ export default function MainContent() {
   );
   const stylesModal = {
     content: {
+      position: "relative",
       backgroundColor: "#eee",
       width: "500px", // фиксированная ширина
       height: "300px", // фиксированная высота

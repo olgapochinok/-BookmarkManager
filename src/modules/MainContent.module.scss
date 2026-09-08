@@ -61,9 +61,17 @@
         padding: 5px 10px;
         font-size: 14px;
         &-wrap{
+            position: absolute;
+            bottom: 10px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
         }
+    }
+    &__title{
+        background-color: variables.$bookmark-select;
+        margin: 0;
+        padding: 10px 5px;
+        text-align: center;
     }
 }
