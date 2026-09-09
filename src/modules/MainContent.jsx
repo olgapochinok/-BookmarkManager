@@ -32,7 +32,7 @@ function BookmarkList({ bookmark, favicon, modalOpen }) {
     </div>
   );
 }
-function BookmarkCol({ bookmark, favicon, modalOpen }) {
+function BookmarkColumn({ bookmark, favicon, modalOpen }) {
   const [isSelect, clickBookmark] = useBookmarkSelected();
 
   return (
@@ -154,12 +154,12 @@ export default function MainContent() {
     return (
       <div className="content" style={{ columnCount: columnViewCount }}>
         {currentBookmarks.map((item) => (
-          <BookmarkCol
+          <BookmarkColumn
             key={item.id}
             bookmark={item}
             favicon={getFaviconUrl(item.url)}
             modalOpen={openModal}
-          ></BookmarkCol>
+          ></BookmarkColumn>
         ))}
         <Modal
           isOpen={modalIsOpen}
