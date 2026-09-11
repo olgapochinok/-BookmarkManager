@@ -6,7 +6,9 @@ import styles from "./MainContent.module.scss";
 
 function BookmarkList({ bookmark, favicon, modalOpen }) {
   const [isSelect, clickBookmark] = useBookmarkSelected();
-
+  const handleDragStart = (e, itemId) => {
+    e.dataTransfer.setData('text/plan', itemId);
+  }
   return (
     <div
       className={`
@@ -24,6 +26,8 @@ function BookmarkList({ bookmark, favicon, modalOpen }) {
       <a
         className={styles["bookmark-list__link"]}
         onClick={clickBookmark}
+        draggable
+        onDragStart={(e) => handleDragStart(e, bookmark.id)}
         href={bookmark.url}
       >
         <span>{bookmark.title || "Без названия"}</span>
@@ -34,7 +38,9 @@ function BookmarkList({ bookmark, favicon, modalOpen }) {
 }
 function BookmarkColumn({ bookmark, favicon, modalOpen }) {
   const [isSelect, clickBookmark] = useBookmarkSelected();
-
+  const handleDragStart = (e, itemId) => {
+    e.dataTransfer.setData('text/plan', itemId);
+  }
   return (
     <div
       className={`
@@ -52,6 +58,8 @@ function BookmarkColumn({ bookmark, favicon, modalOpen }) {
       <a
         className={styles["bookmark-col__link"]}
         onClick={clickBookmark}
+        draggable
+        onDragStart={(e) => handleDragStart(e, bookmark.id)}
         href={bookmark.url}
       >
         <span>{bookmark.title || "Без названия"}</span>

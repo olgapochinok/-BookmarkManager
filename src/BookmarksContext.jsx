@@ -50,6 +50,11 @@ export function BookmarksProvider({ children }) {
       chrome.bookmarks.update(id,{title: title, url: url}, () => {})
     }
   };
+  const moveBookmarkToFolder = (bookmarkId, targetFolderId) => {
+    if (typeof chrome !== 'undefined' && chrome.bookmarks) {
+      chrome.bookmarks.move(bookmarkId,{parentId: targetFolderId, index: 0}, ()=>{})
+    }
+  }
 
   const findBookmarksInFolder = (nodes, folderId) => {
     let activeFolderNode = null;
@@ -95,6 +100,7 @@ export function BookmarksProvider({ children }) {
         setcolumnViewCount,
         deleteBookmark,
         saveChangeBookmark,
+        moveBookmarkToFolder,
       }}
     >
       {children}
